@@ -1,0 +1,128 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+
+.circle_mask {
+  mask-image: radial-gradient(closest-side, transparent -100%, black 50%);
+}
+
+.thing_rotate {
+  transform: skew(10deg, 10deg);
+}
+
+.bgcolor {
+  background-image: linear-gradient(
+    to bottom,
+    #2f2929,
+    #2f2929,
+    #2f2a29,
+    #302a2a,
+    #302a2a,
+    #2d2828,
+    #2b2525,
+    #282323,
+    #221e1e,
+    #1d1818,
+    #171313,
+    #110b0b
+  );
+}
+
+.snakebody1 {
+  background-image: linear-gradient(
+    to right top,
+    #0066ff,
+    #1051c7,
+    #173d92,
+    #162960,
+    #111732
+  );
+}
+
+.snakebody2 {
+  background-image: linear-gradient(
+    to right top,
+    #81487c,
+    #a0459a,
+    #be3eba,
+    #de2fdb,
+    #fd00fd
+  );
+}
+
+.snakebody3 {
+  background-image: linear-gradient(
+    to right top,
+    #f9f9f9,
+    #c5c5c5,
+    #949494,
+    #656565,
+    #3a3a3a,
+    #382f3a,
+    #3e2030,
+    #420f1d,
+    #710826,
+    #a20027,
+    #d2001f,
+    #ff0000
+  );
+}
+
+.snakebody4 {
+  background-image: linear-gradient(
+    to left,
+    #6f1dc0,
+    #6420a8,
+    #582191,
+    #4d217a,
+    #422064,
+    #442069,
+    #45206d,
+    #472072,
+    #561f93,
+    #641cb6,
+    #7314da,
+    #8100ff
+  );
+}
+
+.snakebody {
+  background-image: linear-gradient(
+    to right top,
+    #90e248,
+    #9be84c,
+    #a5ed51,
+    #b0f355,
+    #baf85a,
+    #b9f758,
+    #b7f557,
+    #b6f455,
+    #a8ec4d,
+    #9ae345,
+    #8cdb3c,
+    #7ed334
+  );
+}
+
+.gradient_text {
+  text-shadow: 1px 1px 2px #00a4ff, 0 0 1em #9ed600, 0 0 0.2em #71dd58;
+  background-image: linear-gradient(
+    to left bottom,
+    #fc0000,
+    #f06300,
+    #dc9100,
+    #c0b600,
+    #9ed600,
+    #71dd58,
+    #41e08a,
+    #00e1b3,
+    #00c6dd,
+    #00a4ff,
+    #0078ff,
+    #2a00fb
+  );
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@import "tailwindcss/utilities";
