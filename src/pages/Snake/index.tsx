@@ -7,7 +7,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
 
 const SnakeGame = () => {
-  const url = "http://localhost:3000/api";
+  const url = "https://pythonmaster.vercel.app/api";
   const gridSize = 28;
   const initialSnake = [{ x: 1, y: 1 }];
   let fruits = ["🍑", "🍌", "🍓", "🍒", "🍉", "🥭", "🍇", "🍏", "🥥", "🍎"];
