@@ -7,7 +7,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
 
 const SnakeGame = () => {
-  const url = "https://pythonmaster.vercel.app/api";
+  const url: any = process.env.NEXT_PUBLIC_API_URL;
+
   const gridSize = 28;
   const initialSnake = [{ x: 1, y: 1 }];
   let fruits = ["🍑", "🍌", "🍓", "🍒", "🍉", "🥭", "🍇", "🍏", "🥥", "🍎"];
@@ -26,8 +27,8 @@ const SnakeGame = () => {
     isOpen: false,
   });
 
-  const GetLikeCount = () => {
-    fetch(url)
+  const GetLikeCount = async () => {
+    await fetch(url)
       .then((response) => {
         return response.json();
       })
@@ -226,8 +227,8 @@ const SnakeGame = () => {
     };
   }, [snake, direction, food]);
 
-  const handleButtonClick = () => {
-    fetch(url, {
+  const handleButtonClick = async () => {
+    await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -28,9 +28,15 @@ export default async function handler(
       res
         .status(200)
         .json({ message: "Like Successfully!", like: newLikeCount + 1 });
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      res.status(500).json({ error: "Internal Server Error!" });
+      res
+        .status(500)
+        .json({
+          error: "Internal Server Error!",
+          msg: error.message,
+          stack: error,
+        });
     }
   } else {
     res.status(405).json({ error: "Method Not Allowed" });
