@@ -14,9 +14,7 @@ const Gamepopup: React.FC<PopupProps> = ({ onClose, children }) => {
     <div
       className="z-[99] fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75"
       onClick={onClose}>
-      <div
-        className={`bg-gray-600 px-4 rounded-3xl h-[26vh] w-[35rem]`}
-        onClick={handlePopupClick}>
+      <div className={`px-4 rounded-3xl`} onClick={handlePopupClick}>
         <div>{children}</div>
       </div>
     </div>

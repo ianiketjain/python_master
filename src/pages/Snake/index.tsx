@@ -1,16 +1,14 @@
+import React, { useState, useEffect, useRef } from "react";
 import Gamepopup from "@/component/Gamepopup";
 import SVG from "@/component/SVG";
 import Image from "next/image";
 import confetti from "canvas-confetti";
 
-import React, { useState, useEffect, useRef } from "react";
-import { toast } from "react-hot-toast";
-
 const SnakeGame = () => {
+  
   const url: any = process.env.NEXT_PUBLIC_API_URL;
-
-  // hello
   const gridSize = 28;
+  const [isLowHeight, setIsLowHeight] = useState("h-[90vh]");
   const initialSnake = [{ x: 1, y: 1 }];
   let fruits = ["🍑", "🍌", "🍓", "🍒", "🍉", "🥭", "🍇", "🍏", "🥥", "🍎"];
   const [snake, setSnake] = useState(initialSnake);
@@ -23,6 +21,7 @@ const SnakeGame = () => {
   const [oneFood, setOneFood] = useState("🍑");
   const durationInterval: any = useRef<any>(null);
   const [speed, setSpeed] = useState(120);
+  const [windowWidth, setWindowWidth] = useState<any>(null);
   const [isPopUpVisible, setIsPopUpVisible] = useState<any>({
     type: "",
     isOpen: false,
@@ -121,6 +120,7 @@ const SnakeGame = () => {
     if (highestScore <= snake.length * 10) {
       setHighestScore(snake.length * 10);
     }
+    setSnakeColor("snakebody");
     setSnake(initialSnake);
     setDirection("");
     setDuration(0);
@@ -132,45 +132,50 @@ const SnakeGame = () => {
     const minutes = Math.floor((timeInSeconds % 3600) / 60);
     const seconds = timeInSeconds % 60;
 
+    if (hours === 0) {
+      return `${minutes.toString().padStart(2, "0")}:${seconds
+        .toString()
+        .padStart(2, "0")}`;
+    }
+
     return `${hours.toString().padStart(2, "0")}:${minutes
       .toString()
       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
+  const handleKeyPress = (e: any, direction: string = "") => {
+    if (isPopUpVisible.isOpen) return;
+
+    switch (e.key || direction) {
+      case "ArrowUp":
+      case "w":
+        if (direction !== "DOWN") {
+          setDirection("UP");
+        }
+        break;
+      case "ArrowDown":
+      case "s":
+        if (direction !== "UP") {
+          setDirection("DOWN");
+        }
+        break;
+      case "ArrowLeft":
+      case "a":
+        if (direction !== "RIGHT") {
+          setDirection("LEFT");
+        }
+        break;
+      case "ArrowRight":
+      case "d":
+        if (direction !== "LEFT") {
+          setDirection("RIGHT");
+        }
+        break;
+      default:
+        break;
+    }
+  };
   useEffect(() => {
-    const handleKeyPress = (e: any) => {
-      if (isPopUpVisible.isOpen) return;
-
-      switch (e.key) {
-        case "ArrowUp":
-        case "w":
-          if (direction !== "DOWN") {
-            setDirection("UP");
-          }
-          break;
-        case "ArrowDown":
-        case "s":
-          if (direction !== "UP") {
-            setDirection("DOWN");
-          }
-          break;
-        case "ArrowLeft":
-        case "a":
-          if (direction !== "RIGHT") {
-            setDirection("LEFT");
-          }
-          break;
-        case "ArrowRight":
-        case "d":
-          if (direction !== "LEFT") {
-            setDirection("RIGHT");
-          }
-          break;
-        default:
-          break;
-      }
-    };
-
     document.addEventListener("keydown", handleKeyPress);
 
     return () => {
@@ -228,34 +233,99 @@ const SnakeGame = () => {
     };
   }, [snake, direction, food]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    if (typeof window !== "undefined") {
+      setWindowWidth(window.innerWidth);
+      if (
+        window.innerHeight >= 760 &&
+        window.innerHeight <= 815 &&
+        window.innerWidth >= 1024
+      ) {
+        setIsLowHeight("h-[73vh]");
+      }
+
+      if (
+        window.innerHeight >= 710 &&
+        window.innerHeight < 760 &&
+        window.innerWidth >= 1024
+      ) {
+        setIsLowHeight("h-[82vh]");
+      }
+
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
+  }, []);
+
   const handleButtonClick = async () => {
-    await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ like: Like }),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setLike(data?.like);
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { x: 0.7, y: 0.9 },
-        });
-      })
-      .catch((error) => {
-        toast.error("Internal Server Error", error);
-      });
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { x: 0.7, y: 0.9 },
+    });
+    // await fetch(url, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ like: Like }),
+    // })
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     setLike(data?.like);
+    //   })
+    //   .catch((error) => {
+    //     toast.error("Internal Server Error", error);
+    //   });
   };
 
   return (
     <React.Fragment>
-      <div className="flex items-center xs:flex-col-reverse sm:flex-col-reverse md:flex-row lg:flex-row xl:flex-row w-screen h-fit md:h-screen lg:h-screen xl:h-screen bgcolor">
-        <div className="w-fit md:w-1/2 lg:w-1/2 xl:w-1/2 h-fit m-6 rounded-2xl overflow-hidden bg-gray-900">
+      <div className="w-screen lg:h-screen xl:h-screen 2xl:h-screen flex items-center xs:flex-col-reverse sm:flex-col-reverse md:flex-col-reverse lg:flex-row xl:flex-row bgcolor">
+        {windowWidth <= 1022 && windowWidth >= 402 && (
+          <div className="xs:w-full xs:h-[30vh] px-8 flex mt-6 justify-center">
+            <div className="border shadow-inner shadow-slate-500 w-[14rem] h-[14rem] px-4 rounded-full flex flex-col items-center justify-center">
+              <button
+                onClick={(e: any) => {
+                  handleKeyPress(e, "ArrowUp");
+                }}>
+                <SVG.UpRemoteSvg />
+              </button>
+              <div className="flex justify-between items-center w-full">
+                <button
+                  onClick={(e: any) => {
+                    handleKeyPress(e, "ArrowLeft");
+                  }}>
+                  <SVG.LeftRemoteSvg />
+                </button>
+                <button
+                  onClick={(e: any) => {
+                    handleKeyPress(e, "ArrowRight");
+                  }}>
+                  <SVG.RightRemoteSvg />
+                </button>
+              </div>
+              <button
+                onClick={(e: any) => {
+                  handleKeyPress(e, "ArrowDown");
+                }}>
+                <SVG.DownRemoteSvg />
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div
+          className={`w-fit h-fit m-6 rounded-2xl overflow-hidden snakeboxbg ${isLowHeight}`}>
           {Array.from({ length: gridSize }).map((_, rowIndex) => (
             <div key={rowIndex} className="flex">
               {Array.from({ length: gridSize }).map((_, colIndex) => {
@@ -267,7 +337,13 @@ const SnakeGame = () => {
                 return (
                   <div
                     key={colIndex}
-                    className={`border border-black xl:w-[1.9rem] xl:h-[1.9rem] md:w-7 md:h-7 sm:w-6 sm:h-6 xs:w-4 xs:h-4  shadow-inner ${
+                    className={`shadow-inner  sm:w-6 xs:w-4 md:w-7 xs:h-4 sm:h-6 md:h-7 
+                    ${
+                      isLowHeight === "h-[73vh]" || isLowHeight === "h-[82vh]"
+                        ? "lg:w-[1.3rem] xl:w-[1.3rem] 2xl:w-[1.7rem]  lg:h-[1.3rem] xl:h-[1.3rem] 2xl:h-[1.7rem]"
+                        : "lg:w-[1.3rem] xl:w-[1.8rem]  lg:h-[1.3rem] xl:h-[1.8rem]"
+                    }
+                    ${
                       snake.some(
                         (segment) =>
                           segment.x === colIndex && segment.y === rowIndex
@@ -303,43 +379,56 @@ const SnakeGame = () => {
           ))}
         </div>
 
-        {/* Right Side */}
-        <div className="md:w-1/2 lg:w-1/2 xl:w-1/2 xs:h-[60vh] sm:h-[60vh] md:h-[86vh] lg:h-[85vh] xl:h-[70vh] text-white m-6 relative">
-          <div className="flex flex-col items-center justify-center">
-            <Image
-              src={"/logo.png"}
-              alt={"bg.jpg"}
-              width={350}
-              height={350}
-              className="mix-blend-saturation"
-            />
-          </div>
+        <div className=" xs:w-full md:w-full lg:w-1/2 xl:w-1/2 xs:h-[60vh] sm:h-[60vh] md:h-[75vh] lg:h-[70vh] xl:h-[70vh] 2xl:h-[90vh] text-white m-6 relative">
+          <div className="flex flex-col items-center mt-5">
+            <div>
+              <Image
+                src={"/logo.png"}
+                alt={"bg.jpg"}
+                width={350}
+                height={350}
+                className="rounded-lg"
+              />
+            </div>
 
-          <div className="mt-10 flex flex-col px-10 py-8 justify-center items-center gap-6">
-            <div className="rounded-s-3xl rounded-tr-3xl border-b flex items-center font-mono font-bold italic px-6 w-fit h-fit py-2 rounded-lg shadow-md shadow-gray-400 hover:bg-[#140e0e] hover:shadow-inner">
-              Highest Score &nbsp;
-              <span className="text-[gold] text-2xl">{highestScore}</span>
+            <div className="mt-20 xs:w-[38vh] md:w-[50vw] lg:w-[40vw] xl:w-[30vw] xs:h-[32vh] md:xl:h-[45vh] lg:h-[40vh] xl:h-[40vh] 2xl:h-[50vh] relative rounded-xl overflow-hidden">
+              <div className="absolute inset-0 blur-[4px] bg-transparent border border-gray-400 rounded-xl"></div>
+              <div className="flex justify-between py-4 border-b mx-6">
+                <div className="font-bold text-lg flex items-center gap-4">
+                  Highest Score
+                  <span className="text-[gold] text-2xl">{highestScore}</span>
+                </div>
+                <div className="font-bold text-lg flex items-center gap-4">
+                  Timer
+                  <span className="text-[gold] text-2xl">
+                    {formatTime(duration)}
+                  </span>
+                </div>
+              </div>
+              <div className="xs:h-[25vh] md:h-[25vh] lg:h-[33vh] xl:h-[33vh] 2xl:h-[44vh] pt-10 flex flex-col items-center relative">
+                <div className="font-bold text-xl gap-4 flex flex-col items-center">
+                  <span className="text-[gold] text-2xl">
+                    {snake.length * 10}
+                  </span>
+                  Score
+                </div>
+                <div className="flex  items-center justify-center absolute xs:bottom-10 md:bottom-7 lg:bottom-8 xl:bottom-8 2xl:bottom-10  gap-3 mt-3 w-full">
+                  <button
+                    onClick={handleButtonClick}
+                    type="button"
+                    className="p-2 border rounded-full group hover:bg-[#ff003d]">
+                    <svg
+                      className="w-6 h-6 fill-[#1eff00] group-hover:fill-white"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24">
+                      <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+                    </svg>
+                  </button>
+                  <p className="font-mono">Hit Love to Celebrate!</p>
+                </div>
+              </div>
             </div>
-            <div className="rounded-s-3xl rounded-tr-3xl border-b flex items-center font-mono font-bold italic px-6 w-fit h-fit py-2 rounded-lg shadow-md shadow-gray-400 hover:bg-[#140e0e] hover:shadow-inner">
-              Duration &nbsp;
-              <span className="text-[#b9c5f6] text-xl">
-                {formatTime(duration)}
-              </span>
-            </div>
-            <div className="border-t w-fit px-20 py-2 text-center mt-8 text-2xl rounded-e-3xl rounded-bl-3xl relative shadow-inner shadow-white">
-              Score &nbsp;
-              <span className="text-[#00ff00]">{snake.length * 10}</span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center absolute bottom-7 gap-3 mt-3 w-full">
-            <button
-              onClick={handleButtonClick}
-              type="button"
-              className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
-              <SVG.LikeSvg />
-            </button>
-            <p className="font-mono">Like by {Like} </p>
           </div>
         </div>
       </div>
@@ -348,75 +437,70 @@ const SnakeGame = () => {
         <Gamepopup>
           {isPopUpVisible.type === "GAME_OVER" && (
             <>
-              <p className="w-full text-center text-2xl mt-1 shadow-xl text-[gold]">
-                Game Over &nbsp;&nbsp;
-                <span className="text-sm text-gray-300 italic">
-                  Duration : {formatTime(isPopUpVisible.duration) ?? 0}
-                </span>
-              </p>
-              <div className="flex w-full">
-                <div className="relative">
-                  <Image
-                    src="/win.png"
-                    width={300}
-                    height={300}
-                    alt="win.jpg"
-                    className="py-5"
-                  />
-                  <p
-                    className={`absolute top-12 ${
-                      isPopUpVisible?.currentScore.toString().length === 2
-                        ? "left-20"
-                        : isPopUpVisible?.currentScore.toString().length <= 1
-                        ? "left-20"
-                        : "left-16"
-                    } font-extrabold text-gray-200 text-3xl`}>
-                    {isPopUpVisible?.currentScore}
-                  </p>
+              <div className="flex flex-col items-center justify-center max-w-xs p-6 shadow-md rounded-3xl sm:px-12 dark:bg-[#113d0f] dark:text-gray-100">
+                <div className="border relative w-32 h-32 rounded-full overflow-hidden">
+                  <div className="absolute inset-0 bg-cover bg-center blur-[4px]"></div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-[#00fb76] font-bold text-4xl rounded-full p-1">
+                      {isPopUpVisible?.currentScore}
+                    </div>
+                  </div>
                 </div>
+                <div className="text-center">
+                  <div className="my-2 space-y-4">
+                    <h2 className="text-xl font-semibold sm:text-2xl">
+                      Game Over
+                    </h2>
+                    <p className="px-5 text-xs sm:text-base dark:text-gray-400">
+                      Well Played!!
+                      <span className="ml-4">
+                        {formatTime(isPopUpVisible.duration) ?? 0}
+                      </span>
+                    </p>
+                  </div>
 
-                <div className="flex flex-col items-center justify-center gap-6 w-full">
-                  <button
-                    onClick={() => {
-                      window.location.href = "/";
-                    }}
-                    className="flex items-center gap-2 border w-fit px-4 py-1 rounded-md text-gray-300 hover:bg-[#06ff00] hover:text-black group hover:skew-x-12 hover:shadow-md hover:shadow-gray-400">
-                    <SVG.HomeSvg />
-                    Home
-                  </button>
-                  <button
-                    onClick={() => {
-                      startGame();
-                    }}
-                    className="flex items-center gap-2 border w-fit px-4 py-1 rounded-md text-gray-300 hover:bg-[#06ff00] hover:text-black group hover:skew-x-12 hover:shadow-md hover:shadow-gray-400">
-                    <SVG.RetrySvg />
-                    Retry
-                  </button>
-                  <p className="font-serif font-bolt italic text-lg text-gray-300">
-                    Well played!! keep it up
-                  </p>
+                  <div className="flex justify-center pt-4 space-x-4 align-center">
+                    <button
+                      onClick={() => {
+                        window.location.href = "/";
+                      }}
+                      className="flex items-center gap-2 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-bold rounded-lg text-sm px-3 py-1 text-center dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 shadow hover:shadow-md hover:shadow-slate-500 dark:focus:ring-green-800">
+                      <SVG.HomeSvg />
+                      Home
+                    </button>
+                    <button
+                      onClick={() => {
+                        startGame();
+                      }}
+                      className="flex items-center gap-2 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-bold rounded-lg text-sm px-3 py-1 text-center dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 shadow hover:shadow-md hover:shadow-slate-500 dark:focus:ring-green-800">
+                      <SVG.RetrySvg />
+                      Retry
+                    </button>
+                  </div>
                 </div>
               </div>
             </>
           )}
           {isPopUpVisible.type === "GAME_START" && (
-            <div>
-              <p className="w-full shadow-md text-[gold] text-2xl font-bold text-center mt-1">
-                Welcome Master
-              </p>
-              <div className="flex flex-col items-center">
-                <p className="mt-6 text-red-400 fotn-extrabold">
-                  ⚠️ Game is not over until python touches self body
-                </p>
-                <button
-                  onClick={() => {
-                    startGame();
-                  }}
-                  className="shadow-inner shadow-gray-200 mt-20 flex items-center gap-2 border w-fit px-4 py-2 rounded-md text-gray-300 hover:bg-[#06ff00] hover:text-black group hover:skew-x-12 hover:shadow-md hover:shadow-gray-400">
-                  <SVG.PlaySvg />
-                  Start Game
-                </button>
-              </div>
+            <div className="relative flex flex-col items-center max-w-lg gap-4 p-6 rounded-3xl shadow-md sm:py-8 sm:px-12 dark:bg-[#113d0f] dark:text-gray-100">
+              <Image
+                src={"/snake.gif"}
+                alt={"bg.jpg"}
+                width={350}
+                height={350}
+                className="rounded-full mix-blend-hard-light contrast-[-10]"
+              />
+              <h2 className="text-2xl font-semibold leadi tracking-tight text-center">
+                Welcome to the Era of Nostalgia
+                <br /> for the snake game
+              </h2>
+              <button
+                onClick={() => {
+                  startGame();
+                }}
+                className="mt-8 flex items-center gap-2 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-bold rounded-lg text-base px-4 py-2 text-center dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 shadow hover:shadow-md hover:shadow-slate-500 dark:focus:ring-green-800">
+                Start Game
+              </button>
             </div>
           )}
         </Gamepopup>
@@ -426,3 +510,4 @@ const SnakeGame = () => {
 };
 
 export default SnakeGame;
+// xs:bg-cyan-700 sm:bg-yellow-500 md:bg-purple-500 lg:bg-red-300 xl:bg-blue-500 2xl:bg-indigo-500

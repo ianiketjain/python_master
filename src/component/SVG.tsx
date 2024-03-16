@@ -19,14 +19,12 @@ const PlaySvg = () => {
 
 const RetrySvg = () => {
   return (
-    <svg
-      className="stroke-gray-300 group-hover:stroke-black"
-      width="22px"
-      height="22px"
-      viewBox="0 0 24 24"
-      fill="none">
-      <polyline points="22 12 19 15 16 12" />
-      <path d="M11,20 C6.581722,20 3,16.418278 3,12 C3,7.581722 6.581722,4 11,4 C15.418278,4 19,7.581722 19,12 L19,14" />
+    <svg width="30" height="30" viewBox="0 0 48 48">
+      <path fill="#7cb342" d="M24 3A21 21 0 1 0 24 45A21 21 0 1 0 24 3Z"></path>
+      <path
+        fill="#dcedc8"
+        d="M24,36.1c-6.6,0-12-5.4-12-12c0-3.6,1.6-7,4.4-9.3l2.5,3.1c-1.8,1.5-2.9,3.8-2.9,6.2c0,4.4,3.6,8,8,8 s8-3.6,8-8c0-2.1-0.8-4-2.2-5.5l2.9-2.7C34.8,18,36,21,36,24.1C36,30.7,30.6,36.1,24,36.1z"></path>
+      <path fill="#dcedc8" d="M12 13L21 13 21 22z"></path>
     </svg>
   );
 };
@@ -41,14 +39,113 @@ const LikeSvg = () => {
 
 const HomeSvg = () => {
   return (
+    <svg width="24" height="24" viewBox="0 0 48 48">
+      <polygon
+        fill="#f5bc00"
+        points="42,43 6,43 6,15.056 24,1.453 42,15.025"></polygon>
+      <polygon
+        fill="#f55376"
+        points="3.675,24.333 0.042,19.559 24,1.453 47.958,19.518 44.378,24.333 24.021,8.926"></polygon>
+      <polygon
+        fill="#eb0000"
+        points="6,22.573 24.021,8.926 42,22.533 42,15.025 24,1.453 6,15.056"></polygon>
+      <rect width="12" height="16" x="18" y="27" fill="#eb7900"></rect>
+    </svg>
+  );
+};
+
+const LeftRemoteSvg = () => {
+  return (
     <svg
-      className="stroke-gray-300 group-hover:stroke-black"
-      width="22px"
-      height="22px"
-      viewBox="0 0 24 24"
-      fill="none">
-      <path d="M3 10.182V22h18V10.182L12 2z" />
-      <rect width="6" height="8" x="9" y="14" />
+      height="55"
+      width="55"
+      viewBox="-5.4 -5.4 64.80 64.80"
+      className="group rounded-full">
+      <g>
+        <g>
+          <path
+            className="fill-[#2bee65]  hover:fill-white"
+            d="M27,1L27,1c14.359,0,26,11.641,26,26v0c0,14.359-11.641,26-26,26h0C12.641,53,1,41.359,1,27v0 C1,12.641,12.641,1,27,1z"></path>
+          <path
+            className="fill-[#2bee65]  hover:fill-white"
+            d="M27,54C12.112,54,0,41.888,0,27S12.112,0,27,0s27,12.112,27,27S41.888,54,27,54z M27,2 C13.215,2,2,13.215,2,27s11.215,25,25,25s25-11.215,25-25S40.785,2,27,2z"></path>
+        </g>{" "}
+        <path
+          className="fill-[#ffffff]  group-hover:fill-black"
+          d="M31.706,40c-0.256,0-0.512-0.098-0.707-0.293L19.501,28.209c-0.667-0.667-0.667-1.751,0-2.418 l11.498-11.498c0.391-0.391,1.023-0.391,1.414,0s0.391,1.023,0,1.414L21.12,27l11.293,11.293c0.391,0.391,0.391,1.023,0,1.414 C32.218,39.902,31.962,40,31.706,40z"></path>
+      </g>
+    </svg>
+  );
+};
+const RightRemoteSvg = () => {
+  return (
+    <svg
+      height="55"
+      width="55"
+      viewBox="-5.4 -5.4 64.80 64.80"
+      className="group rounded-full"
+      transform="rotate(180)">
+      <g>
+        <g>
+          <path
+            className="fill-[#2bee65]  hover:fill-white"
+            d="M27,1L27,1c14.359,0,26,11.641,26,26v0c0,14.359-11.641,26-26,26h0C12.641,53,1,41.359,1,27v0 C1,12.641,12.641,1,27,1z"></path>
+          <path
+            className="fill-[#2bee65]  hover:fill-white"
+            d="M27,54C12.112,54,0,41.888,0,27S12.112,0,27,0s27,12.112,27,27S41.888,54,27,54z M27,2 C13.215,2,2,13.215,2,27s11.215,25,25,25s25-11.215,25-25S40.785,2,27,2z"></path>
+        </g>
+        <path
+          className="fill-[#ffffff]  group-hover:fill-black"
+          d="M31.706,40c-0.256,0-0.512-0.098-0.707-0.293L19.501,28.209c-0.667-0.667-0.667-1.751,0-2.418 l11.498-11.498c0.391-0.391,1.023-0.391,1.414,0s0.391,1.023,0,1.414L21.12,27l11.293,11.293c0.391,0.391,0.391,1.023,0,1.414 C32.218,39.902,31.962,40,31.706,40z"></path>
+      </g>
+    </svg>
+  );
+};
+const UpRemoteSvg = () => {
+  return (
+    <svg
+      height="55"
+      width="55"
+      viewBox="-5.4 -5.4 64.80 64.80"
+      className="group rounded-full"
+      transform="rotate(90)">
+      <g>
+        <g>
+          <path
+            className="fill-[#2bee65]  hover:fill-white"
+            d="M27,1L27,1c14.359,0,26,11.641,26,26v0c0,14.359-11.641,26-26,26h0C12.641,53,1,41.359,1,27v0 C1,12.641,12.641,1,27,1z"></path>
+          <path
+            className="fill-[#2bee65]  hover:fill-white"
+            d="M27,54C12.112,54,0,41.888,0,27S12.112,0,27,0s27,12.112,27,27S41.888,54,27,54z M27,2 C13.215,2,2,13.215,2,27s11.215,25,25,25s25-11.215,25-25S40.785,2,27,2z"></path>
+        </g>
+        <path
+          className="fill-[#ffffff]  group-hover:fill-black"
+          d="M31.706,40c-0.256,0-0.512-0.098-0.707-0.293L19.501,28.209c-0.667-0.667-0.667-1.751,0-2.418 l11.498-11.498c0.391-0.391,1.023-0.391,1.414,0s0.391,1.023,0,1.414L21.12,27l11.293,11.293c0.391,0.391,0.391,1.023,0,1.414 C32.218,39.902,31.962,40,31.706,40z"></path>
+      </g>
+    </svg>
+  );
+};
+const DownRemoteSvg = () => {
+  return (
+    <svg
+      height="55"
+      width="55"
+      viewBox="-5.4 -5.4 64.80 64.80"
+      className="group rounded-full"
+      transform="rotate(270)">
+      <g>
+        <g>
+          <path
+            className="fill-[#2bee65]  hover:fill-white"
+            d="M27,1L27,1c14.359,0,26,11.641,26,26v0c0,14.359-11.641,26-26,26h0C12.641,53,1,41.359,1,27v0 C1,12.641,12.641,1,27,1z"></path>
+          <path
+            className="fill-[#2bee65]  group-hover:fill-white"
+            d="M27,54C12.112,54,0,41.888,0,27S12.112,0,27,0s27,12.112,27,27S41.888,54,27,54z M27,2 C13.215,2,2,13.215,2,27s11.215,25,25,25s25-11.215,25-25S40.785,2,27,2z"></path>
+        </g>
+        <path
+          className="fill-[#ffffff]  group-hover:fill-black"
+          d="M31.706,40c-0.256,0-0.512-0.098-0.707-0.293L19.501,28.209c-0.667-0.667-0.667-1.751,0-2.418 l11.498-11.498c0.391-0.391,1.023-0.391,1.414,0s0.391,1.023,0,1.414L21.12,27l11.293,11.293c0.391,0.391,0.391,1.023,0,1.414 C32.218,39.902,31.962,40,31.706,40z"></path>
+      </g>
     </svg>
   );
 };
@@ -58,6 +155,10 @@ const SVG = {
   RetrySvg,
   HomeSvg,
   LikeSvg,
+  LeftRemoteSvg,
+  RightRemoteSvg,
+  UpRemoteSvg,
+  DownRemoteSvg,
 };
 
 export default SVG;
