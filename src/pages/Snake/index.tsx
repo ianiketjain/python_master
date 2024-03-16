@@ -9,6 +9,7 @@ import { toast } from "react-hot-toast";
 const SnakeGame = () => {
   const url: any = process.env.NEXT_PUBLIC_API_URL;
 
+  // hello
   const gridSize = 28;
   const initialSnake = [{ x: 1, y: 1 }];
   let fruits = ["🍑", "🍌", "🍓", "🍒", "🍉", "🥭", "🍇", "🍏", "🥥", "🍎"];
