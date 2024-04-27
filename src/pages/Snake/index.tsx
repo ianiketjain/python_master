@@ -5,22 +5,22 @@ import Image from "next/image";
 import confetti from "canvas-confetti";
 
 const SnakeGame = () => {
-  
-  const url: any = process.env.NEXT_PUBLIC_API_URL;
   const gridSize = 28;
-  const [isLowHeight, setIsLowHeight] = useState("h-[90vh]");
   const initialSnake = [{ x: 1, y: 1 }];
+  const url: any = process.env.NEXT_PUBLIC_API_URL;
   let fruits = ["🍑", "🍌", "🍓", "🍒", "🍉", "🥭", "🍇", "🍏", "🥥", "🍎"];
-  const [snake, setSnake] = useState(initialSnake);
-  const [direction, setDirection] = useState("");
-  const [food, setFood] = useState<{ x: 1; y: 1 }>();
-  const [highestScore, setHighestScore] = useState(0);
+
   const [Like, setLike] = useState(0);
-  const [snakeColor, setSnakeColor] = useState("snakebody");
+  const [speed, setSpeed] = useState(120);
   const [duration, setDuration] = useState(0);
   const [oneFood, setOneFood] = useState("🍑");
+  const [direction, setDirection] = useState("");
   const durationInterval: any = useRef<any>(null);
-  const [speed, setSpeed] = useState(120);
+  const [snake, setSnake] = useState(initialSnake);
+  const [food, setFood] = useState<{ x: 1; y: 1 }>();
+  const [highestScore, setHighestScore] = useState(0);
+  const [isLowHeight, setIsLowHeight] = useState("h-[90vh]");
+  const [snakeColor, setSnakeColor] = useState("snakebody");
   const [windowWidth, setWindowWidth] = useState<any>(null);
   const [isPopUpVisible, setIsPopUpVisible] = useState<any>({
     type: "",
@@ -80,8 +80,6 @@ const SnakeGame = () => {
 
     let b = Math.floor(Math.random() * 10);
     let a = fruits[b];
-    console.log(b);
-
     setOneFood(a);
 
     const foodOnSnake = snake.some(
@@ -143,10 +141,10 @@ const SnakeGame = () => {
       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
-  const handleKeyPress = (e: any, direction: string = "") => {
+  const handleKeyPress = (e: any, direction1: string = "") => {
     if (isPopUpVisible.isOpen) return;
 
-    switch (e.key || direction) {
+    switch (e.key || direction1) {
       case "ArrowUp":
       case "w":
         if (direction !== "DOWN") {
@@ -175,6 +173,7 @@ const SnakeGame = () => {
         break;
     }
   };
+
   useEffect(() => {
     document.addEventListener("keydown", handleKeyPress);
 
@@ -265,11 +264,40 @@ const SnakeGame = () => {
   }, []);
 
   const handleButtonClick = async () => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { x: 0.7, y: 0.9 },
-    });
+    var duration = 5 * 1000;
+    var animationEnd = Date.now() + duration;
+    var skew = 1;
+
+    function randomInRange(min: any, max: any) {
+      return Math.random() * (max - min) + min;
+    }
+
+    (function frame() {
+      var timeLeft = animationEnd - Date.now();
+      var ticks = Math.max(200, 500 * (timeLeft / duration));
+      skew = Math.max(0.8, skew - 0.001);
+
+      confetti({
+        particleCount: 1,
+        startVelocity: 0,
+        ticks: ticks,
+        origin: {
+          x: Math.random(),
+          // since particles fall down, skew start toward the top
+          y: Math.random() * skew - 0.2,
+        },
+        colors: ["#ffffff"],
+        shapes: ["circle"],
+        gravity: randomInRange(0.4, 0.6),
+        scalar: randomInRange(0.4, 1),
+        drift: randomInRange(-0.4, 0.4),
+      });
+
+      if (timeLeft > 0) {
+        requestAnimationFrame(frame);
+      }
+    })();
+
     // await fetch(url, {
     //   method: "POST",
     //   headers: {
@@ -510,4 +538,3 @@ const SnakeGame = () => {
 };
 
 export default SnakeGame;
-// xs:bg-cyan-700 sm:bg-yellow-500 md:bg-purple-500 lg:bg-red-300 xl:bg-blue-500 2xl:bg-indigo-500
