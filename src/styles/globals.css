@@ -1,0 +1,116 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+
+.bgcolor {
+  background-image: linear-gradient(
+    to right bottom,
+    #010101,
+    #111111,
+    #1b1c1c,
+    #252626,
+    #2f3030,
+    #2f3937,
+    #31423a,
+    #394a39,
+    #355235,
+    #30592f,
+    #2a6129,
+    #226821
+  );
+}
+
+.snakeboxbg {
+  background-image: linear-gradient(
+    to right top,
+    #010101,
+    #131a22,
+    #0e2f3b,
+    #00464c,
+    #005d51,
+    #285c3f,
+    #3f592f,
+    #535425,
+    #4c3b1e,
+    #3b261b,
+    #221615,
+    #000000
+  );
+}
+
+.snakebody1 {
+  background-image: linear-gradient(
+    to right top,
+    #0066ff,
+    #1051c7,
+    #173d92,
+    #162960,
+    #111732
+  );
+}
+
+.snakebody2 {
+  background-image: linear-gradient(
+    to right top,
+    #81487c,
+    #a0459a,
+    #be3eba,
+    #de2fdb,
+    #fd00fd
+  );
+}
+
+.snakebody3 {
+  background-image: linear-gradient(
+    to right top,
+    #f9f9f9,
+    #c5c5c5,
+    #949494,
+    #656565,
+    #3a3a3a,
+    #382f3a,
+    #3e2030,
+    #420f1d,
+    #710826,
+    #a20027,
+    #d2001f,
+    #ff0000
+  );
+}
+
+.snakebody4 {
+  background-image: linear-gradient(
+    to left,
+    #6f1dc0,
+    #6420a8,
+    #582191,
+    #4d217a,
+    #422064,
+    #442069,
+    #45206d,
+    #472072,
+    #561f93,
+    #641cb6,
+    #7314da,
+    #8100ff
+  );
+}
+
+.snakebody {
+  background-image: linear-gradient(
+    to right top,
+    #90e248,
+    #9be84c,
+    #a5ed51,
+    #b0f355,
+    #baf85a,
+    #b9f758,
+    #b7f557,
+    #b6f455,
+    #a8ec4d,
+    #9ae345,
+    #8cdb3c,
+    #7ed334
+  );
+}
+
+@import "tailwindcss/utilities";
