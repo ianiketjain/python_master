@@ -9,7 +9,7 @@ These instructions will guide you on how to set up and use the features of this 
 
 ### Prerequisites
 
-- Node.js v18.17.0 and npm v8.19.3
+- Node.js v18.17.0 and npm v8.19.3 
 
 ### Installing
 
